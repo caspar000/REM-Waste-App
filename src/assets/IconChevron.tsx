@@ -5,7 +5,7 @@ type Props = {
   className?: string
 }
 
-const IconChevron: React.FC<Props> = ({ size = 20, className }) => {
+const IconChevron: React.FC<Props> = ({ size = 24, className }) => {
   return (
     <svg
       width={size}

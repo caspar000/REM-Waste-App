@@ -5,7 +5,7 @@ type Props = {
   className?: string
 }
 
-const IconCard: React.FC<Props> = ({ size = 20, className }) => {
+const IconCard: React.FC<Props> = ({ size = 24, className }) => {
   return (
     <svg
       width={size}
