@@ -6,6 +6,24 @@ module.exports = {
   },
   important: '#root',
   theme: {
+    colors: {
+      slate: {
+        900: '#050506',
+        800: '#121212',
+        700: '#1C1C1C',
+        600: '#2A2A2A',
+        500: '#5A5A5A',
+        400: '#898989',
+        300: '#9CA3AF'
+      },
+      blue: {
+        900: '#14192A',
+        500: '#0137C1',
+        100: '#60A5FA'
+      },
+      orange: '#EBB305',
+      white: '#FFFFFF'
+    },
     screens: {
       xs: '384px',
       'max-xs': { max: '384px' },
