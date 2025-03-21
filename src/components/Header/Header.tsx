@@ -1,6 +1,8 @@
 import cn from 'classnames'
 import React from 'react'
 
+import { assert } from '@/utils/assert'
+
 interface IHeaderItem {
   title: string
   Icon: React.ReactNode
@@ -12,6 +14,12 @@ interface IHeader {
 }
 
 const Header = ({ items, currentIdx }: IHeader) => {
+  assert(currentIdx >= 0, 'currentIdx should be greater than or equal to 0')
+  assert(
+    currentIdx < items.length,
+    'currentIdx should be less than items.length'
+  )
+
   const isActive = (idx: number) => {
     return currentIdx === idx || currentIdx > idx
   }
@@ -42,6 +50,7 @@ const Header = ({ items, currentIdx }: IHeader) => {
           </div>
           {idx < items.length - 1 && (
             <div
+              key={idx + 0.1}
               className={cn(
                 'h-px w-full max-w-[64px] shrink bg-slate-600 max-sm:max-w-[24px]',
                 isActive(idx + 1) && '!bg-blue-500'
