@@ -13,7 +13,7 @@ interface IHeader {
   currentIdx: number
 }
 
-const Header = ({ items, currentIdx }: IHeader) => {
+export const Header = ({ items, currentIdx }: IHeader) => {
   assert(currentIdx >= 0, 'currentIdx should be greater than or equal to 0')
   assert(
     currentIdx < items.length,
@@ -62,5 +62,3 @@ const Header = ({ items, currentIdx }: IHeader) => {
     </header>
   )
 }
-
-export default Header
