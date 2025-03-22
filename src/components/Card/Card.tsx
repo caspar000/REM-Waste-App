@@ -5,6 +5,7 @@ import { KeyValueIndicator } from '@/atoms/KeyValueIndicator/KeyValueIndicator'
 import { PostcodeIndicator } from '@/atoms/PostcodeIndicator/PostcodeIndicator'
 import { SelectButton } from '@/atoms/SelectButton/SelectButton'
 import { WarningIndicator } from '@/atoms/WarningIndicator/WarningIndicator'
+import { assert } from '@/utils/assert'
 import { priceAfterTax } from '@/utils/helper'
 
 interface ISkipCard {
@@ -42,10 +43,17 @@ export const Card = ({
   allows_heavy_waste,
   active
 }: ISkipCard) => {
+  assert(size > 0, 'Size should be greater than 0')
+  assert(hire_period_days > 0, 'Hire period days should be greater than 0')
+  assert(
+    typeof price_before_vat === 'number',
+    'Price before VAT should be a number'
+  )
+
   return (
     <div
       className={cn(
-        'flex min-h-[660px] flex-col gap-4 rounded-lg border-2 border-solid border-slate-600 bg-slate-700 p-6 hover:cursor-pointer hover:border-blue-800',
+        'flex h-[648px] flex-col gap-4 rounded-lg border-2 border-solid border-slate-600 bg-slate-700 p-6 hover:cursor-pointer hover:border-blue-800',
         active && '!border-blue-500'
       )}
     >
@@ -53,7 +61,7 @@ export const Card = ({
         <img
           src="/coverImage.png"
           alt="Skip Cover Image"
-          className="max-w-full rounded-lg border-2 border-solid border-slate-600"
+          className="h-full w-full max-w-full rounded-lg border-2 border-solid border-slate-600"
         />
         <PostcodeIndicator
           postcode={postcode}
