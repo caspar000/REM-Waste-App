@@ -28,3 +28,7 @@ I made the header component accept an array of objects which contain an icon and
 
 > I'm using basic `assert()` statements in the beginning of some function (preconditions) to formalize the assumptions and easily catch errors while coding.
 
+# TODO: Add ReactRedux which will save data from API
+# TODO: Populate Swiper with data from Redux
+# TODO: Add the "Selected" logic
+# TODO: Add the Bottom "Selected" Component
