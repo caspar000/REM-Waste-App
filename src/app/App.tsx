@@ -67,7 +67,7 @@ const App = () => {
           </p>
         </div>
 
-        <div className="relative sm:px-12">
+        <div className="relative sm:px-12 max-sm:pb-20">
           <Swiper
             modules={[Pagination, Navigation]}
             spaceBetween={10}

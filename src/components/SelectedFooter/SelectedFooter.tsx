@@ -45,7 +45,7 @@ export const SelectedFooter = ({
     <div
       className={cn(
         'fixed inset-x-0 transition-all duration-300 ease-out',
-        'border-t-2 border-solid border-slate-600 bg-slate-700 p-4',
+        'z-50 border-t-2 border-solid border-slate-600 bg-slate-700 p-4',
         isFooterVisible ? 'bottom-0' : '-bottom-[87.5px]',
         className
       )}
@@ -53,11 +53,11 @@ export const SelectedFooter = ({
       <Container className="flex items-center justify-between">
         {/* Left Side */}
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 max-sm:hidden">
             <IconTruck size={40} />
             <span className="text-3xl font-semibold">{selectedSkip.size}</span>
           </div>
-          <div className="flex items-end gap-2">
+          <div className="flex items-end gap-2 max-sm:flex-col max-sm:gap-0">
             <span className="text-3xl font-bold text-blue-500">{`£${calculateFullPrice()}`}</span>
             <span className="text-sm font-medium leading-6 text-slate-300">
               Total Cost

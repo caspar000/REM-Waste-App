@@ -16,8 +16,6 @@ export const fetchSkipDataFromAPI = createAsyncThunk<ISkip[], ILocation>(
       `${DOMAIN}/api/skips/by-location?postcode=${postcode}&area=${area}`
     )
 
-    console.log('skip response', response.data)
-
     const skip: ISkip[] = response.data
 
     return skip
