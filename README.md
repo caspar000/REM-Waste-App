@@ -27,8 +27,3 @@ It would not make any sense to change the styling of the header, since all the o
 I made the header component accept an array of objects which contain an icon and a name, as well as the current active index. This way, the header component could be reused on other parts of the website if desired by simply changing the array of icons and names. Passing the current active index will automatically "light up" the steps.
 
 > I'm using basic `assert()` statements in the beginning of some function (preconditions) to formalize the assumptions and easily catch errors while coding.
-
-# TODO: Add ReactRedux which will save data from API
-# TODO: Populate Swiper with data from Redux
-# TODO: Add the "Selected" logic
-# TODO: Add the Bottom "Selected" Component
