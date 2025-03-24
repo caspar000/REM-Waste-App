@@ -4,12 +4,14 @@ interface ISelectButton {
   children: React.ReactNode
   className?: string
   selected?: boolean
+  onClick?: () => void
 }
 
 export const SelectButton = ({
   children,
   className,
-  selected
+  selected,
+  onClick
 }: ISelectButton) => {
   return (
     <button
@@ -19,6 +21,7 @@ export const SelectButton = ({
         !selected && 'bg-slate-600 hover:bg-slate-550 active:bg-slate-600',
         className
       )}
+      onClick={onClick}
     >
       {children}
     </button>

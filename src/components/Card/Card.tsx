@@ -5,25 +5,13 @@ import { KeyValueIndicator } from '@/atoms/KeyValueIndicator/KeyValueIndicator'
 import { PostcodeIndicator } from '@/atoms/PostcodeIndicator/PostcodeIndicator'
 import { SelectButton } from '@/atoms/SelectButton/SelectButton'
 import { WarningIndicator } from '@/atoms/WarningIndicator/WarningIndicator'
+import { ISkip } from '@/store/features/skipSlice'
 import { assert } from '@/utils/assert'
 import { priceAfterTax } from '@/utils/helper'
 
-interface ISkipCard {
-  id: number
-  size: number
-  hire_period_days: number
-  transport_cost: number | null
-  per_tonne_cost: number | null
-  price_before_vat: number
-  vat: number
-  postcode: string
-  area: string | null
-  forbidden: boolean
-  created_at: string
-  updated_at: string
-  allowed_on_road: boolean
-  allows_heavy_waste: boolean
+interface ISkipCard extends ISkip {
   active?: boolean
+  onClick?: () => void
 }
 
 export const Card = ({
@@ -41,8 +29,10 @@ export const Card = ({
   updated_at,
   allowed_on_road,
   allows_heavy_waste,
-  active
+  active,
+  onClick
 }: ISkipCard) => {
+  assert(id !== null, 'ID should be present')
   assert(size > 0, 'Size should be greater than 0')
   assert(hire_period_days > 0, 'Hire period days should be greater than 0')
   assert(
@@ -56,6 +46,7 @@ export const Card = ({
         'flex h-[648px] flex-col gap-4 rounded-lg border-2 border-solid border-slate-600 bg-slate-700 p-6 hover:cursor-pointer hover:border-blue-800',
         active && '!border-blue-500'
       )}
+      onClick={onClick}
     >
       <div className="relative">
         <img

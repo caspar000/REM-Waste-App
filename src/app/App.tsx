@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { fetchSkipDataFromAPI } from '@/api/skip.api'
 import {
   IconBin,
   IconCalendar,
@@ -10,10 +13,14 @@ import {
   IconShield,
   IconTruck
 } from '@/assets'
+import { IconSpinner } from '@/assets/IconSpinner'
 import { CustomButton } from '@/atoms/CustomButton/CustomButton'
 import { Card } from '@/components/Card/Card'
 import { Container } from '@/components/Container/Container'
 import { Header } from '@/components/Header/Header'
+import { SelectedFooter } from '@/components/SelectedFooter/SelectedFooter'
+import { ISkip } from '@/store/features/skipSlice'
+import { AppDispatch, RootState } from '@/store/store'
 
 const headerItems = [
   { title: 'Postcode', Icon: <IconPin /> },
@@ -24,154 +31,25 @@ const headerItems = [
   { title: 'Payment', Icon: <IconCard /> }
 ]
 
-const temporaryArray = [
-  {
-    id: 11554,
-    size: 4,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 311,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: true,
-    allows_heavy_waste: true
-  },
-  {
-    id: 11555,
-    size: 6,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 342,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: true,
-    allows_heavy_waste: true
-  },
-  {
-    id: 11556,
-    size: 8,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 420,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: true,
-    allows_heavy_waste: true
-  },
-  {
-    id: 11557,
-    size: 10,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 448,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: false
-  },
-  {
-    id: 11558,
-    size: 12,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 491,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: false
-  },
-  {
-    id: 11559,
-    size: 14,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 527,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: false
-  },
-  {
-    id: 11560,
-    size: 16,
-    hire_period_days: 14,
-    transport_cost: null,
-    per_tonne_cost: null,
-    price_before_vat: 556,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: false
-  },
-  {
-    id: 11561,
-    size: 20,
-    hire_period_days: 14,
-    transport_cost: 236,
-    per_tonne_cost: 236,
-    price_before_vat: 944,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: true
-  },
-  {
-    id: 11562,
-    size: 40,
-    hire_period_days: 14,
-    transport_cost: 236,
-    per_tonne_cost: 236,
-    price_before_vat: 944,
-    vat: 20,
-    postcode: 'NR32',
-    area: null,
-    forbidden: false,
-    created_at: '2021-04-06T17:04:42',
-    updated_at: '2024-04-02T09:22:38',
-    allowed_on_road: false,
-    allows_heavy_waste: false
-  }
-]
-
 const App = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(fetchSkipDataFromAPI({ postcode: 'NR32', area: 'Lowestoft' }))
+  }, [dispatch])
+
+  const skipArray = useSelector((state: RootState) => state.skip)
+
+  const [selectedSkip, setSelectedSkip] = useState<ISkip>()
+
+  const handleSelectSkip = (skip: ISkip) => {
+    setSelectedSkip(skip)
+  }
+
+  const isActive = (id: number) => {
+    return selectedSkip?.id === id
+  }
+
   return (
     <section className={'sm:p-8 max-sm:p-4'}>
       <Header items={headerItems} currentIdx={2} />
@@ -215,11 +93,21 @@ const App = () => {
               }
             }}
           >
-            {temporaryArray.map((item, idx) => (
-              <SwiperSlide key={idx}>
-                <Card {...item} />
-              </SwiperSlide>
-            ))}
+            {skipArray.length < 1 && (
+              <div className="flex h-[60vh] w-full items-center justify-center">
+                <IconSpinner />
+              </div>
+            )}
+            {skipArray &&
+              skipArray.map((skip, idx) => (
+                <SwiperSlide key={idx}>
+                  <Card
+                    {...skip}
+                    onClick={() => handleSelectSkip(skip)}
+                    active={isActive(skip.id)}
+                  />
+                </SwiperSlide>
+              ))}
           </Swiper>
           <CustomButton
             secondary
@@ -237,6 +125,7 @@ const App = () => {
           </CustomButton>
         </div>
       </Container>
+      {selectedSkip && <SelectedFooter selectedSkip={selectedSkip} />}
     </section>
   )
 }
